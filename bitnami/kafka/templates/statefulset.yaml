@@ -91,9 +91,9 @@ spec:
       securityContext: {{- omit .Values.podSecurityContext "enabled" | toYaml | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "kafka.serviceAccountName" . }}
-      {{- if or (and .Values.volumePermissions.enabled .Values.persistence.enabled) (and .Values.externalAccess.enabled .Values.externalAccess.autoDiscovery.enabled) .Values.initContainers }}
+      {{- if or (and .Values.volumePermissions.enabled (ne .Values.persistence.type "EphemeralVolume")) (and .Values.externalAccess.enabled .Values.externalAccess.autoDiscovery.enabled) .Values.initContainers }}
       initContainers:
-        {{- if and .Values.volumePermissions.enabled .Values.persistence.enabled }}
+        {{- if and .Values.volumePermissions.enabled (ne .Values.persistence.type "EphemeralVolume") }}
         - name: volume-permissions
           image: {{ include "kafka.volumePermissions.image" . }}
           imagePullPolicy: {{ .Values.volumePermissions.image.pullPolicy | quote }}

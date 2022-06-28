@@ -108,20 +108,20 @@ but Helm 2.9 and 2.10 does not support it, so we need to implement this if-else 
             {{- printf "storageClassName: %s" .Values.global.storageClass -}}
         {{- end -}}
     {{- else -}}
-        {{- if .Values.persistence.storageClass -}}
-              {{- if (eq "-" .Values.persistence.storageClass) -}}
+        {{- if .Values.persistence.volumeTemplate.storageClass -}}
+              {{- if (eq "-" .Values.persistence.volumeTemplate.storageClass) -}}
                   {{- printf "storageClassName: \"\"" -}}
               {{- else }}
-                  {{- printf "storageClassName: %s" .Values.persistence.storageClass -}}
+                  {{- printf "storageClassName: %s" .Values.persistence.volumeTemplate.storageClass -}}
               {{- end -}}
         {{- end -}}
     {{- end -}}
 {{- else -}}
-    {{- if .Values.persistence.storageClass -}}
-        {{- if (eq "-" .Values.persistence.storageClass) -}}
+    {{- if .Values.persistence.volumeTemplate.storageClass -}}
+        {{- if (eq "-" .Values.persistence.volumeTemplate.storageClass) -}}
             {{- printf "storageClassName: \"\"" -}}
         {{- else }}
-            {{- printf "storageClassName: %s" .Values.persistence.storageClass -}}
+            {{- printf "storageClassName: %s" .Values.persistence.volumeTemplate.storageClass -}}
         {{- end -}}
     {{- end -}}
 {{- end -}}
